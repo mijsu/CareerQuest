@@ -737,8 +737,21 @@ async function seedFirestore() {
   }
 }
 
-// Run seed if called directly
-if (require.main === module) {
+// Run seed if called directly (ES module compatible)
+import { fileURLToPath } from "url";
+
+const isMain = (() => {
+  try {
+    const __filename = fileURLToPath(import.meta.url);
+    const entry = process.argv[1];
+    if (!entry) return false;
+    return entry === __filename || entry.endsWith(`/server/seed-firestore.ts`) || entry.endsWith(`\\server\\seed-firestore.ts`);
+  } catch (e) {
+    return false;
+  }
+})();
+
+if (isMain) {
   seedFirestore()
     .then(() => process.exit(0))
     .catch((error) => {
