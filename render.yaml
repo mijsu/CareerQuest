@@ -11,13 +11,7 @@ services:
     buildCommand: npm run build
     startCommand: npm run start
     # Render will provide a PORT env var; server already reads process.env.PORT
-    # Add non-secret env vars here if desired. For secrets, use the Render dashboard.
-    envVars:
-      - key: NODE_ENV
-        value: production
-      # Example non-secret fallback (replace or remove):
-      # - key: SOME_FLAG
-      #   value: "true"
+    # Do NOT set NODE_ENV here — Render handles it automatically
 
   # One-off job to seed Firestore (run manually from Render dashboard)
   - type: cron
